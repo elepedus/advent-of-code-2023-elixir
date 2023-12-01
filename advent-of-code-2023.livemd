@@ -1,0 +1,178 @@
+<!-- livebook:{"persist_outputs":true} -->
+
+# Advent of Code
+
+```elixir
+Mix.install([
+  {:kino_aoc, "~> 0.1.5"},
+  {:req, "~> 0.4.5"}
+])
+```
+
+## Introduction
+
+Something is wrong with global snow production, and you've been selected to take a look. The Elves have even given you a map; on it, they've used stars to mark the top fifty locations that are likely to be having problems.
+
+You've been doing this long enough to know that to restore snow operations, you need to check all fifty stars by December 25th.
+
+Collect stars by solving puzzles. Two puzzles will be made available on each day in the Advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
+
+You try to ask why they can't just use a weather machine ("not powerful enough") and where they're even sending you ("the sky") and why your map looks mostly blank ("you sure ask a lot of questions") and hang on did you just say the sky ("of course, where do you think snow comes from") when you realize that the Elves are already loading you into a trebuchet ("please hold still, we need to strap you in").
+
+As they're making the final adjustments, they discover that their calibration document (your puzzle input) has been amended by a very young Elf who was apparently just excited to show off her art skills. Consequently, the Elves are having trouble reading the values on the document.
+
+The newly-improved calibration document consists of lines of text; each line originally contained a specific calibration value that the Elves now need to recover. On each line, the calibration value can be found by combining the first digit and the last digit (in that order) to form a single two-digit number.
+
+For example:
+
+```
+1abc2
+pqr3stu8vwx
+a1b2c3d4e5f
+treb7uchet
+```
+
+In this example, the calibration values of these four lines are 12, 38, 15, and 77. Adding these together produces 142.
+
+## Day One Puzzle
+
+<!-- livebook:{"attrs":{"assign_to":"puzzle_input","day":"1","session_secret":"AOC_SESSION","year":"2023"},"chunks":null,"kind":"Elixir.KinoAOC.HelperCell","livebook_object":"smart_cell"} -->
+
+```elixir
+{:ok, puzzle_input} =
+  KinoAOC.download_puzzle("2023", "1", System.fetch_env!("LB_AOC_SESSION"))
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:ok,
+ "46threevqs8114\nthreetwoonez1gtrd\n6ffxbtff\n769twotwo6rv9\ngjrcjrkvghthreegqqrg82qbct\nzkxjhgprtrlcfeight795five8\n99seven3vdcgvmvxtjtwodc5\nthree5eightthree3four3vtkkqrgxs\nfour863mrrnrsxrkone\nsevenntgvnrrqfvxh2ttnkgffour8fiveone\n49fbsfb\n3rbmlsksg\nztgszqjjsrtmgqx6572\n3bqnfxkdbonesixseven\nmfgx32ftpbhgngm7\nfzrpfhbfvj6dbxbtfs7twofksfbshrzkdeightwoqg\n2xcftwo\ncshmmltsml4fiveeightdn\neightthsix1\ntwo1gvfxcqnrfnbeightthreexznhbmmk\n3917sevenvxqxntcgxskh\nksctcnfxdsk96drlbjkthreesfqlvnpvfbcbmg\n8nvrmzfs46\n5dbgltmgg1xvtqfkdxsrxzltwo1pgqlqndlc\neight7four6rpbtmjzj5\n41seven\ngpmfhninexxgqr6\n15sixdrhxzcmqf\n8fivettgmcslxptwofivelckzvfkl\n67ninetjngsrvcpxb8eighteightwofh\n4nine7oneighthm\nnjtwonefvhjplkjgvsevenbjg77\neighthrspkszngkpdtzdpcsmjnvlnhcm9pqmpkxqmbtmbv\nninehthhgbfsrrbpn2qpcflhgdvh9twotpzkvzmmsj\n6fourzpjthmkrkvqkvvp\nvnrnkfp6\npfouronefour6\n87fourmznhvmt7\nnxbssjc1sevenvrcjlczct6ninekclbffs\neightrpzsdggsixthree9dhrnqtjcbxthree9\npkcmnktzvdjtbbkvxhxpsfp8\nsffd124fkqsq1bd\ntxzsmrzlcnnine72kgfkcf\ndbfbdskfdn5nine2sdr\neightseven47six57\n2eight634sixmlrkhrbslf\nhpeightwopgrqmblthree1fmfnvd\n2jbbf\nvdsbvmjseven4eight195vdkfc4\nfive3xjzlrmxvqznine\nnine4vqxmzqxcvfhlm45\nrtwo1\nsix8jddkprxvbh98hd\nfive5sevenfourfour4\nseventhree4lnxcvdprp66hsjfive\nninevrxxhgvkghmcs8gsvplvsfour\n6bkeight3fhkfqvvsbcsixljfive\n6sixktwo\nlmscbrnlzmbqpl75ptwo64eightwoxcm\n2sixfivetwoeightdpskxjtlrfive4\n87gfmklvnzfz4594qlksr5\nfive3one65\nvxrnhpvrrdd7nqdjfqnhfglfive7qqtzhcrk\n7sixthree441pf16\n11hrfdvdkf\nvst7three2vtwojrkdkjltgdt5\nvqmtwo5\nnffpcvfpjleightfiveeightknmjfive2\nddfhzdndxvhcgjrcmqq158\nkkeightwo14\n8onetwo\nsevenrslxphqpcpdnxhpzqdf1twoone9\nfour8onelgqhkmxktf5six\n8ckshssfour73twoone\nthreethree8onefourkkhvfive4five\n64xpzhxtsixseven59\ntwo8srjslxss\nsixsixninecpgjkfhzdqdjlc48seven\nlpjgghdtgk1sevenzpkmxzqxfourthreethree\ncvznpxfhj2jnlgmnbkdsix\nninetwo1fournjqvsb\nsxhl3kc\nmtllnjrbscfkdhseveneightgjr4one\nqnineeighttwovjsnvs7five4svdmjt\nbcplhrpvmkxkjxlzl7zkbpdnoneninethreej\n1mbmfktgtwonine\n9threefkptqhhnine2six1fgxnvvfvplv\n8onefourtwoxl42shxq3\n38rlbhvlpeightfivelbcm3jfd\n97one1threexjfsljjz41\nkqmkvmh1three9three74\n3fivenineeightwod\n6sixkgnqqb6\nsevenjdn8csthpjxgnd83\nqhssrppqxlone649\n3gjpsncshmnhkdpzskmmfst3sixfive5\nfivejprgsxddzgcnrn6cpnxnj\n4three3ninedqknine\n61xfrcfseven6\nsfpqbxbdrhqkndfdpldvfive7gxmnthreetwofour\nlbvrzv2onec2six8three\nninenine2grvzhgtgfourthree98\n1579416\n5fzcbbxzfjjtwo6k\nxmxbtqvnxf665lplnhlgjlkzhkkbknjcxqvkpsp3\nfivefive26fivefour5\n5dbxqcbbkjonehseven\n1k\n8sixqmone9zthx6\nldsmxpbkkx1rppscjfour3six\nfivethreethreekxzgqmrz8\nlxklrjjmqsix5snb7\nthreethreetwothree6\n8three6\nfnine7jmmseven3\nrfhlkhhlx8sjqgclvlsctwo\nvrzpdfjs5fxldpnhvhmmxhleight\n9tmqznszjgrnlhnpxbc\n3sxfscfseventhree\n565vs2\nfour86six6\n16\n4vbcrh\n62jrjfrdcldbvjzhp\nonecsqpbrxpmqtrbbtxnrhkdlthree3s1six\ntwo798tqsjv\nznktgzzmtwo28\n8hllzrjqhvfone\ntgnlbtc2ninejmcsixfour\nfivek1five\nrklpvqfvtwo3\nlgdgchcpcl55hfdmdj\nonesix7onefive9\njrnthree46seven\nqqptcnrxlllvccssrkkmkxnz8\ncmfour8threelthree\nxfgqc36oneightvlx\nxrvrchbdhftgpn22fgmnhbrscfqrqpgzjmgfive1\nstwotwofourfourthree2\neightjcfqthcvcgpxxl6j\ncjvfdgmplfeight9\n591eightwoc\njftninejfb11one1zqpnine\nthreeqndgjdfive4fourhgcsbptb\n7pmxvqdhbhf8six\n67zhx64tlnjkvhvv5cblxd\n29zqfive3jkzmbj1\nsmvlmnph1seven\n61four\nzjmgnbkoneczgsftnhtvfbtjvbjzpspcffrdkv8\nthreesix4\nfhqm8\nninefour1\ntwo422dqjqhvhbqkdqf4sixoneightgrd\nllnrdbhthree778dqzrcplfoureight\neightjblmbgqhrj2onenineszr2two\n8cxbxqssfkzpponeppcqsx\nseventzlsxrskxqm8threecrclkpqjpmeight1\nnine1twonem\n6threeckmkktkvxjteight559ldn\n2zxhldmvpqdcddsxpnnvrvxmc99\nfourone4dzftfnccnvzjdrg49seven\n7eight44\nxmjqm8two47rpjfninethree\n7zhmjjhtrqjcmfprhsix5twobfive4\nrccsqlt8\nseven6three\nlrbp3five19zxb45\n8jlbtllzbtdgzbcfln929\nkdeightlfk9two2fhgshhbzhf\ndvxllmfourpzfpvch7\nfour28\n3threefour4hxmfbmjdheight\n6twosphthbbqcltcgxm5ssvqndphrnine\n438rrxntninetwophsix\neight3eightnine1sevenxsvfr\n4643kntqsvgqqtwo\ntwo8two\n7gbxkjonetncmeight52\nkg517\nonetwo933\nfbdmpjrjsscsfvfntwofive8tzbrbjsj\n7eightfive9nineninednsfhzvtonepccctxssbc\n93twofour2eight\n7bvzknzdmkjvrxkfngfnsd4foureight5\nonescsxpcfivelmqvfqxmc99vbshtgzjkjfour\n1hvdnine1\n542zhgcmvzcj3threefrvlcc\nsxfc95seven3\nnczqknxn4four7xj81r\n8threefive\n" <> ...}
+```
+
+```elixir
+defmodule DayOne do
+  @digits_with_names [
+    {~r"one|1", "1"},
+    {~r"two|2", "2"},
+    {~r"three|3", "3"},
+    {~r"four|4", "4"},
+    {~r"five|5", "5"},
+    {~r"six|6", "6"},
+    {~r"seven|7", "7"},
+    {~r"eight|8", "8"},
+    {~r"nine|9", "9"},
+    {~r"zero|0", "0"}
+  ]
+  @digits [
+    {~r"1", "1"},
+    {~r"2", "2"},
+    {~r"3", "3"},
+    {~r"4", "4"},
+    {~r"5", "5"},
+    {~r"6", "6"},
+    {~r"7", "7"},
+    {~r"8", "8"},
+    {~r"9", "9"},
+    {~r"0", "0"}
+  ]
+
+  def process_input(input, options \\ [parse_digit_names: false]) do
+    input
+    |> String.split("\n")
+    |> extract_digits(parse_digit_names: Keyword.get(options, :parse_digit_names))
+    |> compute_calibration_values()
+    |> score()
+    |> dbg()
+  end
+
+  def extract_digits(input, parse_digit_names: true),
+    do: extract_digits(input, @digits_with_names)
+
+  def extract_digits(input, parse_digit_names: false), do: extract_digits(input, @digits)
+
+  def extract_digits(input, regexs) when is_list(regexs) do
+    input
+    |> Enum.map(fn line ->
+      Enum.flat_map(regexs, fn {x, digit} ->
+        Regex.scan(x, line, return: :index)
+        |> Enum.map(fn i ->
+          {i, digit}
+        end)
+      end)
+      |> Enum.sort(fn {[{first_index, _}], _}, {[{second_index, _}], _} ->
+        first_index <= second_index
+      end)
+      |> Enum.map(fn {_, digit} -> digit end)
+    end)
+  end
+
+  def compute_calibration_values([]), do: []
+
+  def compute_calibration_values([line]) when is_list(line) do
+    [to_calibration_value(line)]
+  end
+
+  def compute_calibration_values([line | rest]) when is_list(line) do
+    [to_calibration_value(line) | compute_calibration_values(rest)]
+  end
+
+  def to_calibration_value(line) when is_list(line) do
+    [first, last] = [List.first(line), List.last(line)]
+    "#{first}#{last}"
+  end
+
+  def score([]), do: 0
+
+  def score([head | tail]) do
+    head
+    |> String.to_integer()
+    |> Kernel.+(score(tail))
+  end
+end
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+{:module, DayOne, <<70, 79, 82, 49, 0, 0, 31, ...>>, {:score, 1}}
+```
+
+<!-- livebook:{"branch_parent_index":1} -->
+
+## Part 1
+
+```elixir
+sample =
+  "1abc2\npqr3stu8vwx\na1b2c3d4e5f\ntreb7uchet"
+  |> DayOne.process_input()
+
+puzzle_input
+|> DayOne.process_input()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+53194
+```
+
+<!-- livebook:{"branch_parent_index":1} -->
+
+## Part 2
+
+```elixir
+sample =
+  "two1nine\neightwothree\nabcone2threexyz\nxtwone3four\n4nineeightseven2\nzoneight234\n7pqrstsixteen"
+
+puzzle_input
+|> DayOne.process_input(parse_digit_names: true)
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+54249
+```
+
+<!-- livebook:{"offset":9180,"stamp":{"token":"XCP.r1LUtNJrOnl3wpPei6uXeo3aaBvI25BQ9vZEL7e2WkDSGEKw0vEklnqp207A1LqmH919Zy87xVzlGELRsLaXLHVeFVZ1hSdFvVdZDyNSdxtg0Cd968bUiSEc0jxtq09ZFrhtlmtEag8QkrFf6888RGCRKgZHyhQh","version":2}} -->
